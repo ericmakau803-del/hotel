@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UrbanNest | Deluxe Suite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:#020617;color:#fff;}
+header{padding:20px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(2,6,23,0.7);backdrop-filter:blur(5px);}
+.logo{color:#38bdf8;font-size:1.5rem;font-weight:700;}
+nav a{margin-left:20px;color:#cbd5f5;text-decoration:none;font-weight:500;}
+
+/* Carousel */
+.carousel{
+  position:relative;
+  max-width:1000px;
+  margin:50px auto;
+  overflow:hidden;
+  border-radius:25px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.6);
+}
+.slides{
+  display:flex;
+  transition:transform 0.8s cubic-bezier(0.77,0,0.175,1);
+}
+.slides img{
+  width:100%;
+  flex-shrink:0;
+  height:400px;
+  object-fit:cover;
+  border-radius:25px;
+  cursor:pointer;
+  transition:transform 0.5s, box-shadow 0.5s;
+}
+.slides img:hover{
+  transform:scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+.prev, .next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(56,189,248,0.8);
+  border:none;
+  padding:12px;
+  border-radius:50%;
+  cursor:pointer;
+  color:#020617;
+  font-weight:700;
+  font-size:1.2rem;
+}
+.indicators{
+  position:absolute;
+  bottom:15px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+.indicators span{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#38bdf8;
+  opacity:0.5;
+  cursor:pointer;
+  transition:opacity 0.3s;
+}
+.indicators span.active{opacity:1;}
+
+/* 360° VR */
+#room3d{
+  width:100%;
+  max-width:1000px;
+  height:450px;
+  margin:50px auto;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 30px 60px rgba(0,0,0,0.6);
+}
+
+/* Book Button */
+.book{
+  display:block;
+  max-width:300px;
+  margin:30px auto;
+  text-align:center;
+  background:#38bdf8;
+  color:#020617;
+  padding:16px 40px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+  text-decoration:none;
+}
+.book:hover{transform:scale(1.05);}
+</style>
+</head>
+
+<body>
+<header>
+<div class="logo">UrbanNest</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="airbnb.html">AirBnB</a>
+<a href="food.html">Food</a>
+<a href="booking.html">Book</a>
+</nav>
+</header>
+
+<!-- Carousel -->
+<div class="carousel">
+  <div class="slides" id="slides">
+    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
+    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688">
+    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035">
+  </div>
+  <button class="prev" onclick="prevSlide()">‹</button>
+  <button class="next" onclick="nextSlide()">›</button>
+  <div class="indicators" id="indicators"></div>
+</div>
+
+<!-- 360° VR Room -->
+<div id="room3d"></div>
+
+<!-- Book Now -->
+<a class="book" onclick="bookRoom('Deluxe Suite')">Book via WhatsApp</a>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+/* Carousel */
+let currentSlide=0;
+const slides=document.getElementById("slides");
+const indicatorsContainer=document.getElementById("indicators");
+
+for(let i=0;i<slides.children.length;i++){
+  let dot=document.createElement("span");
+  if(i===0) dot.classList.add("active");
+  dot.addEventListener("click",()=>showSlide(i));
+  indicatorsContainer.appendChild(dot);
+}
+
+function updateIndicators(){
+  Array.from(indicatorsContainer.children).forEach((dot,i)=>dot.classList.toggle("active",i===currentSlide));
+}
+
+function showSlide(i){
+  if(i<0) i=slides.children.length-1;
+  if(i>=slides.children.length) i=0;
+  currentSlide=i;
+  slides.style.transform=`translateX(${-100*currentSlide}%)`;
+  updateIndicators();
+}
+function prevSlide(){showSlide(currentSlide-1);}
+function nextSlide(){showSlide(currentSlide+1);}
+setInterval(()=>{nextSlide();},5000);
+
+/* 360° VR */
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x020617);
+const camera=new THREE.PerspectiveCamera(75,Math.min(window.innerWidth,1000)/450,1,1100);
+camera.position.set(0,0,0.1);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(Math.min(window.innerWidth,1000),450);
+document.getElementById("room3d").appendChild(renderer.domElement);
+const controls=new THREE.OrbitControls(camera,renderer.domElement);
+controls.enableZoom=true;
+controls.enablePan=false;
+const texture=new THREE.TextureLoader().load('https://images.unsplash.com/photo-1560066984-138dadb4c035');
+const geometry=new THREE.SphereGeometry(500,60,40);
+geometry.scale(-1,1,1);
+const material=new THREE.MeshBasicMaterial({map:texture});
+const sphere=new THREE.Mesh(geometry,material);
+scene.add(sphere);
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
+animate();
+window.addEventListener('resize',()=>{
+  camera.aspect=Math.min(window.innerWidth,1000)/450;
+  camera.updateProjectionMatrix();
+  renderer.setSize(Math.min(window.innerWidth,1000),450);
+});
+
+/* WhatsApp Booking */
+function bookRoom(roomType){
+  let msg=`Hello UrbanNest,%0AName: %0ADates: %0ARoom: ${roomType}`;
+  window.open(`https://wa.me/254785321343?text=${msg}`);
+}
+</script>
+
+</body>
+</html>

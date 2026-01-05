@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UrbanNest | Food Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:#020617;color:#fff;}
+header{padding:20px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(2,6,23,0.7);backdrop-filter:blur(5px);}
+.logo{color:#38bdf8;font-size:1.5rem;font-weight:700;}
+nav a{margin-left:20px;color:#cbd5f5;text-decoration:none;font-weight:500;}
+
+h1{text-align:center;padding:40px 0;color:#38bdf8;}
+.count{text-align:center;color:#94a3b8;margin-bottom:30px;}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  padding:0 30px 50px 30px;
+}
+.card{
+  background:#0f172a;
+  border-radius:20px;
+  overflow:hidden;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.card img{width:100%;height:160px;object-fit:cover;}
+.card:hover{transform:scale(1.05);box-shadow:0 20px 40px rgba(0,0,0,0.5);}
+.info{padding:15px;}
+.price{color:#38bdf8;font-weight:600;margin-top:5px;}
+footer{text-align:center;padding:30px;color:#94a3b8;}
+footer::after{content:"@eehricko Graphic Design";display:block;margin-top:5px;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">UrbanNest</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="airbnb.html">AirBnB</a>
+<a href="food.html">Food</a>
+<a href="booking.html">Book</a>
+</nav>
+</header>
+
+<h1>Food Menu</h1>
+<div class="count">🍽️ Total Foods Available: 6</div>
+
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"><div class="info"><h4>Burger</h4><div class="price">KES 650</div></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe"><div class="info"><h4>Pizza</h4><div class="price">KES 900</div></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141"><div class="info"><h4>Pasta</h4><div class="price">KES 750</div></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e"><div class="info"><h4>Salad</h4><div class="price">KES 500</div></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1585238342021-3a2e768805d6"><div class="info"><h4>Sandwich</h4><div class="price">KES 550</div></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"><div class="info"><h4>Juice</h4><div class="price">KES 400</div></div></div>
+</div>
+
+<footer>
+© 2026 UrbanNest • World-Class Living
+</footer>
+
+</body>
+</html>

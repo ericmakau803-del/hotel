@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UrbanNest | Booking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{
+  background:#020617;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.form{
+  max-width:450px;
+  width:90%;
+  background:rgba(2,6,23,0.95);
+  padding:40px;
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+.form h2{text-align:center;margin-bottom:25px;color:#38bdf8;}
+input, select, button{
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border:none;
+  border-radius:25px;
+  font-size:1rem;
+}
+input, select{background:#0f172a;color:#fff;}
+input::placeholder{color:#94a3b8;}
+button{
+  background:#38bdf8;
+  color:#020617;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{transform:scale(1.05);}
+</style>
+</head>
+<body>
+
+<div class="form">
+<h2>Book Your Stay</h2>
+<input id="name" type="text" placeholder="Your Full Name" required>
+<input id="dates" type="text" placeholder="Booking Dates (e.g. 05 Jan - 08 Jan)" required>
+<select id="room" required>
+<option value="" disabled selected>Select Room Type</option>
+<option value="Studio Apartment">Studio Apartment</option>
+<option value="City Loft">City Loft</option>
+<option value="Deluxe Suite">Deluxe Suite</option>
+</select>
+<button onclick="book()">Book via WhatsApp</button>
+</div>
+
+<script>
+function book(){
+  let name=document.getElementById("name").value;
+  let dates=document.getElementById("dates").value;
+  let room=document.getElementById("room").value;
+  if(!name || !dates || !room){alert("Please fill all fields!");return;}
+  let msg=`Hello UrbanNest,%0AName: ${name}%0ADates: ${dates}%0ARoom: ${room}`;
+  window.open(`https://wa.me/254785321343?text=${msg}`);
+}
+</script>
+
+</body>
+</html>
